@@ -10,6 +10,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  StyleProp,
+  ViewStyle,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -20,11 +22,12 @@ import { Ionicons } from "@expo/vector-icons";
 
 export type CarregamentoProps = {
   mensagem?: string;
+  style?: StyleProp<ViewStyle>;
 };
 
-export function Carregamento({ mensagem = "Carregando..." }: CarregamentoProps) {
+export function Carregamento({ mensagem = "Carregando...", style }: CarregamentoProps) {
   return (
-    <View style={styles.loadingContainer}>
+    <View style={[styles.loadingContainer, style]}>
       <ActivityIndicator size="large" color="#501673" />
       <Text style={styles.loadingTexto}>{mensagem}</Text>
     </View>
@@ -100,7 +103,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 60,
   },
   loadingTexto: {
     marginTop: 12,

@@ -1,5 +1,8 @@
 import { Categoria } from "./categoria";
-import { simularConsultaCategorias } from "@/data/mock-database";
+import {
+  simularConsultaCategorias,
+  simularConsultaCategoriaPorId,
+} from "@/data/mock-database";
 
 export class CategoriaDataSource {
   /**
@@ -8,4 +11,12 @@ export class CategoriaDataSource {
   async getCategorias(): Promise<Categoria[]> {
     return await simularConsultaCategorias();
   }
+
+  /**
+   * Retorna uma categoria pelo seu ID único, ou undefined se inexistente.
+   */
+  async getCategoriaPorId(id: string): Promise<Categoria | undefined> {
+    return await simularConsultaCategoriaPorId(id);
+  }
 }
+

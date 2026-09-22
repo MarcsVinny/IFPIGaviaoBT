@@ -155,3 +155,8 @@ export async function simularConsultaProdutoPorId(produtoId: string): Promise<Pr
   await new Promise((resolve) => setTimeout(resolve, DELAY_MS));
   return BANCO_PRODUTOS.find((p) => p.id === produtoId);
 }
+
+export async function simularConsultaCategoriaPorId(categoriaId: string): Promise<Categoria | undefined> {
+  await new Promise((resolve) => setTimeout(resolve, DELAY_MS));
+  return BANCO_CATEGORIAS.find((c) => c.id === categoriaId);
+}

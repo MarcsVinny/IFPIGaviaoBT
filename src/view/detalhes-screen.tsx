@@ -33,7 +33,10 @@ export function DetalhesScreen() {
 
       {/* CONTEÚDO PRINCIPAL COM ROLAGEM */}
       {state.carregando ? (
-        <Carregamento mensagem="Carregando detalhes do item..." />
+        <Carregamento
+          mensagem="Carregando detalhes do item..."
+          style={styles.loadingContainer}
+        />
       ) : state.error ? (
         <MensagemErro mensagem={state.error} />
       ) : state.produto ? (
@@ -309,5 +312,8 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  loadingContainer: {
+    paddingTop: 100,
   },
 });

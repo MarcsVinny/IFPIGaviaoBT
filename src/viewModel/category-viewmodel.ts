@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useRouter, useLocalSearchParams, Href } from "expo-router";
+import { CategoriaDataSource } from "@/model/categoria-datasource";
 import { ProdutoDataSource } from "@/model/produto-datasource";
 import { Produto } from "@/model/produto";
 
-// Instância criada no nível do módulo fora do hook
+// Instâncias criadas no nível do módulo fora do hook
+const categoriaDataSource = new CategoriaDataSource();
 const produtoDataSource = new ProdutoDataSource();
 
 export type CategoryState = {
@@ -26,13 +28,7 @@ export function useCategoryViewModel(): [CategoryState, CategoryActions] {
   const { id } = useLocalSearchParams<{ id: string }>();
   const categoriaId = Array.isArray(id) ? id[0] : id ?? "";
 
-  const nomeCategoria =
-    categoriaId === "bebidas"
-      ? "Bebidas"
-      : categoriaId === "comidas"
-        ? "Comidas"
-        : "Cardápio";
-
+  const [nomeCategoria, setNomeCategoria] = useState<string>("Cardápio");
   const [carregando, setCarregando] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [produtos, setProdutos] = useState<Produto[]>([]);
@@ -44,21 +40,34 @@ export function useCategoryViewModel(): [CategoryState, CategoryActions] {
       return;
     }
 
-    async function carregarProdutos() {
+    async function carregarDados() {
       try {
         setCarregando(true);
         setError(null);
-        const resultado = await produtoDataSource.getProdutosPorCategoria(categoriaId);
-        setProdutos(resultado);
+
+        // Executa as consultas em paralelo respeitando o atraso único de 600ms
+        const [categoria, resultadoProdutos] = await Promise.all([
+          categoriaDataSource.getCategoriaPorId(categoriaId),
+          produtoDataSource.getProdutosPorCategoria(categoriaId),
+        ]);
+
+        if (!categoria) {
+          setError("Categoria não encontrada no cardápio.");
+          setProdutos([]);
+          setNomeCategoria("Cardápio");
+        } else {
+          setNomeCategoria(categoria.nome);
+          setProdutos(resultadoProdutos);
+        }
       } catch (err) {
-        console.error("useCategoryViewModel: erro ao carregar produtos", err);
+        console.error("useCategoryViewModel: erro ao carregar dados", err);
         setError("Não foi possível carregar os produtos do cardápio.");
       } finally {
         setCarregando(false);
       }
     }
 
-    carregarProdutos();
+    carregarDados();
   }, [categoriaId]);
 
   const actions: CategoryActions = {

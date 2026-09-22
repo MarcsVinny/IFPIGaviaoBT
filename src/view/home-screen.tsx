@@ -53,7 +53,10 @@ export function HomeScreen() {
         showsVerticalScrollIndicator={false}
       >
         {state.carregando ? (
-          <Carregamento mensagem="Consultando cardápio..." />
+          <Carregamento
+            mensagem="Consultando cardápio..."
+            style={styles.loadingContainer}
+          />
         ) : state.error ? (
           <MensagemErro mensagem={state.error} />
         ) : (
@@ -143,6 +146,9 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     textAlign: "center",
     lineHeight: 22,
+  },
+  loadingContainer: {
+    paddingVertical: 60,
   },
   conteudoScroll: {
     paddingVertical: 28,

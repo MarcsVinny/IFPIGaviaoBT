@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "expo-router";
+import { useRouter, Href } from "expo-router";
 import { CategoriaDataSource } from "@/model/categoria-datasource";
 import { Categoria } from "@/model/categoria";
 
@@ -44,7 +44,7 @@ export function useHomeViewModel(): [HomeState, HomeActions] {
 
   const actions: HomeActions = {
     navegarParaCategoria: (categoriaId: string) => {
-      router.push(`/category/${categoriaId}` as any);
+      router.push(`/category/${categoriaId}` as Href);
     },
   };
 

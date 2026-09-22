@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { useRouter, useLocalSearchParams, Href } from "expo-router";
 import { ProdutoDataSource } from "@/model/produto-datasource";
 import { Produto } from "@/model/produto";
 
@@ -66,7 +66,7 @@ export function useCategoryViewModel(): [CategoryState, CategoryActions] {
       router.back();
     },
     navegarParaDetalhes: (produtoId: string) => {
-      router.push(`/item/${produtoId}` as any);
+      router.push(`/item/${produtoId}` as Href);
     },
   };
 

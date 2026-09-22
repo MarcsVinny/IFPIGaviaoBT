@@ -17,11 +17,12 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { useCardapioViewModel } from "@/viewmodel/useCardapioViewModel";
-import { Lanche } from "@/model/lanche";
+import { useCategoryViewModel } from "@/viewModel/category-viewmodel";
+import { Produto } from "@/model/produto";
+import { formatarPreco } from "@/view/util";
 
 export default function CardapioView() {
-  const [state, actions] = useCardapioViewModel();
+  const [state, actions] = useCategoryViewModel();
 
   return (
     <View style={styles.tela}>
@@ -49,7 +50,7 @@ export default function CardapioView() {
       </View>
 
       {/* CONTEÚDO PRINCIPAL: LISTA DE PRODUTOS */}
-      {state.loading ? (
+      {state.carregando ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#501673" />
           <Text style={styles.loadingTexto}>Buscando itens no banco...</Text>
@@ -57,7 +58,7 @@ export default function CardapioView() {
       ) : (
         <FlatList
           data={state.produtos}
-          keyExtractor={(item: Lanche) => item.id}
+          keyExtractor={(item: Produto) => item.id}
           contentContainerStyle={styles.listaConteudo}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={
@@ -67,7 +68,7 @@ export default function CardapioView() {
               </Text>
             </View>
           }
-          renderItem={({ item }: { item: Lanche }) => (
+          renderItem={({ item }: { item: Produto }) => (
             <TouchableOpacity
               activeOpacity={0.85}
               style={styles.cardItem}
@@ -84,7 +85,7 @@ export default function CardapioView() {
               <View style={styles.infoContainer}>
                 <Text style={styles.nomeItem}>{item.nome}</Text>
                 <Text style={styles.precoItem}>
-                  {actions.formatarPreco(item.preco)}
+                  {formatarPreco(item.preco)}
                 </Text>
               </View>
 

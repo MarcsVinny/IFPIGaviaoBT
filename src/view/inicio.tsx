@@ -17,10 +17,10 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { useInicioViewModel } from "@/viewmodel/useInicioViewModel";
+import { useHomeViewModel } from "@/viewModel/home-viewmodel";
 
 export default function InicioView() {
-  const [state, actions] = useInicioViewModel();
+  const [state, actions] = useHomeViewModel();
 
   return (
     <View style={styles.tela}>
@@ -52,7 +52,7 @@ export default function InicioView() {
         contentContainerStyle={styles.conteudoScroll}
         showsVerticalScrollIndicator={false}
       >
-        {state.loading ? (
+        {state.carregando ? (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color="#501673" />
             <Text style={styles.loadingTexto}>Consultando cardápio...</Text>

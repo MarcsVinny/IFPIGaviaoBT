@@ -17,7 +17,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { useDetalhesViewModel } from "@/viewmodel/useDetalhesViewModel";
+import { useDetalhesViewModel } from "@/viewModel/detalhes-viewmodel";
+import { formatarPreco } from "@/view/util";
 
 export default function DetalhesView() {
   const [state, actions] = useDetalhesViewModel();
@@ -45,7 +46,7 @@ export default function DetalhesView() {
       </View>
 
       {/* CONTEÚDO PRINCIPAL COM ROLAGEM */}
-      {state.loading ? (
+      {state.carregando ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#501673" />
           <Text style={styles.loadingTexto}>Carregando detalhes do item...</Text>
@@ -75,7 +76,7 @@ export default function DetalhesView() {
               <Text style={styles.nomeProduto}>{state.produto.nome}</Text>
               <View style={styles.badgePreco}>
                 <Text style={styles.textoBadgePreco}>
-                  {actions.formatarPreco(state.produto.preco)}
+                  {formatarPreco(state.produto.preco)}
                 </Text>
               </View>
             </View>
@@ -121,7 +122,7 @@ export default function DetalhesView() {
                 <TouchableOpacity
                   activeOpacity={0.7}
                   style={styles.btnMenos}
-                  onPress={actions.decrementar}
+                  onPress={actions.decrementarQuantidade}
                 >
                   <Ionicons name="remove" size={20} color="#ffffff" />
                 </TouchableOpacity>
@@ -133,7 +134,7 @@ export default function DetalhesView() {
                 <TouchableOpacity
                   activeOpacity={0.7}
                   style={styles.btnMais}
-                  onPress={actions.incrementar}
+                  onPress={actions.incrementarQuantidade}
                 >
                   <Ionicons name="add" size={20} color="#ffffff" />
                 </TouchableOpacity>

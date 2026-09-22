@@ -1,4 +1,4 @@
 // Rota fina — MVVM Simplificado
-// Delega toda responsabilidade à View e ViewModel correspondentes.
-import InicioView from "@/view/inicio";
-export default InicioView;
+// Delega toda a responsabilidade de apresentação à HomeScreen e ao seu ViewModel correspondente.
+import HomeScreen from "@/view/home-screen";
+export default HomeScreen;

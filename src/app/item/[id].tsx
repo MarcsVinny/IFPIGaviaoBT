@@ -1,4 +1,4 @@
 // Rota fina — MVVM Simplificado
-// Delega toda responsabilidade à View e ViewModel correspondentes.
-import DetalhesView from "@/view/detalhes";
-export default DetalhesView;
+// Delega toda a responsabilidade de apresentação à DetalhesScreen e ao seu ViewModel correspondente.
+import DetalhesScreen from "@/view/detalhes-screen";
+export default DetalhesScreen;

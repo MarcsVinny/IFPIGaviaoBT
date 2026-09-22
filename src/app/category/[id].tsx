@@ -1,4 +1,4 @@
 // Rota fina — MVVM Simplificado
-// Delega toda responsabilidade à View e ViewModel correspondentes.
-import CardapioView from "@/view/cardapio";
-export default CardapioView;
+// Delega toda a responsabilidade de apresentação à CategoryScreen e ao seu ViewModel correspondente.
+import CategoryScreen from "@/view/category-screen";
+export default CategoryScreen;

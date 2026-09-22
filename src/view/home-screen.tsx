@@ -1,8 +1,8 @@
 // ============================================================================
-// CAMADA VIEW — Tela Inicial (MVVM Simplificado)
+// CAMADA VIEW — Tela Inicial / Categorias (MVVM Simplificado)
 // Componente 100% focado em renderização visual.
-// Consome estado e ações exclusivamente via useInicioViewModel().
-// NÃO importa serviços, NÃO chama router, NÃO faz lógica de negócio.
+// Consome estado e ações exclusivamente via useHomeViewModel().
+// NÃO importa fontes de dados, NÃO chama router diretamente.
 // ============================================================================
 
 import React from "react";
@@ -12,14 +12,14 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  ActivityIndicator,
   ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useHomeViewModel } from "@/viewModel/home-viewmodel";
+import { Carregamento, MensagemErro } from "./components";
 
-export default function InicioView() {
+export function HomeScreen() {
   const [state, actions] = useHomeViewModel();
 
   return (
@@ -53,10 +53,9 @@ export default function InicioView() {
         showsVerticalScrollIndicator={false}
       >
         {state.carregando ? (
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="#501673" />
-            <Text style={styles.loadingTexto}>Consultando cardápio...</Text>
-          </View>
+          <Carregamento mensagem="Consultando cardápio..." />
+        ) : state.error ? (
+          <MensagemErro mensagem={state.error} />
         ) : (
           <View style={styles.gridCategorias}>
             {state.categorias.map((cat) => (
@@ -90,6 +89,8 @@ export default function InicioView() {
     </View>
   );
 }
+
+export default HomeScreen;
 
 const styles = StyleSheet.create({
   tela: {
@@ -147,17 +148,6 @@ const styles = StyleSheet.create({
     paddingVertical: 28,
     paddingHorizontal: 16,
     flexGrow: 1,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingVertical: 60,
-  },
-  loadingTexto: {
-    marginTop: 12,
-    fontSize: 15,
-    color: "#6c757d",
   },
   gridCategorias: {
     flexDirection: "row",
